@@ -1,0 +1,1500 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MedRelations Communications — Strategická zdravotnická komunikace</title>
+<meta name="description" content="Specializovaná agentura pro zdravotnickou komunikaci, PR a Public Affairs ve farmaceutickém sektoru.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ── RESET & BASE ─────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --navy:        #0A2342;
+  --navy2:       #0D2E46;
+  --navy3:       #133A52;
+  --teal:        #0D7377;
+  --mint:        #14BDAC;
+  --light:       #F2F7F9;
+  --muted:       #5E7A8A;
+  --muted2:      #7AAABB;
+  --white:       #FFFFFF;
+  --dark:        #1B2E3C;
+  --card-border: #D8E8EE;
+
+  --font-display: 'Barlow', 'Segoe UI', sans-serif;
+  --font-body:    'DM Sans', 'Segoe UI', sans-serif;
+
+  --section-pad: 72px 0;
+  --container:   1140px;
+  --radius:      3px;
+  --transition:  0.28s ease;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--dark);
+  background: var(--white);
+  overflow-x: hidden;
+}
+
+a { text-decoration: none; color: inherit; }
+
+.container {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+/* ── SCROLL REVEAL ────────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+.reveal.visible { opacity: 1; transform: none; }
+.reveal-delay-1 { transition-delay: 0.08s; }
+.reveal-delay-2 { transition-delay: 0.16s; }
+.reveal-delay-3 { transition-delay: 0.24s; }
+.reveal-delay-4 { transition-delay: 0.32s; }
+.reveal-delay-5 { transition-delay: 0.40s; }
+.reveal-delay-6 { transition-delay: 0.48s; }
+
+/* ── NAVIGATION ───────────────────────────────────── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  transition: background var(--transition), box-shadow var(--transition);
+}
+nav.scrolled {
+  background: var(--navy);
+  box-shadow: 0 2px 20px rgba(0,0,0,0.22);
+}
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 68px;
+  gap: 20px;
+}
+.nav-logo {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+  flex-shrink: 0;
+}
+.nav-logo-primary {
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: 0.03em;
+}
+.nav-logo-secondary {
+  font-family: var(--font-body);
+  font-size: 9px;
+  font-weight: 500;
+  color: var(--mint);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: 2px;
+  align-items: center;
+}
+.nav-links a {
+  font-size: 13px;
+  font-weight: 400;
+  color: rgba(255,255,255,0.7);
+  padding: 6px 11px;
+  border-radius: var(--radius);
+  transition: color var(--transition), background var(--transition);
+  letter-spacing: 0.01em;
+}
+.nav-links a:hover { color: var(--white); background: rgba(255,255,255,0.08); }
+.nav-links a.active { color: var(--mint); }
+.nav-cta {
+  background: var(--mint) !important;
+  color: var(--navy) !important;
+  font-weight: 600 !important;
+  padding: 8px 16px !important;
+  transition: background var(--transition), transform var(--transition) !important;
+}
+.nav-cta:hover { background: #18d4c0 !important; transform: translateY(-1px); }
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: 4px;
+  background: none;
+  border: none;
+}
+.nav-hamburger span { width: 24px; height: 2px; background: var(--white); border-radius: 2px; display: block; }
+.nav-mobile {
+  display: none;
+  flex-direction: column;
+  background: var(--navy2);
+  padding: 12px 32px 20px;
+  border-top: 1px solid rgba(255,255,255,0.07);
+}
+.nav-mobile.open { display: flex; }
+.nav-mobile a {
+  font-size: 15px;
+  color: rgba(255,255,255,0.8);
+  padding: 11px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  transition: color var(--transition);
+}
+.nav-mobile a:hover { color: var(--mint); }
+
+/* ── HERO ─────────────────────────────────────────── */
+#hero {
+  min-height: 100vh;
+  background: var(--navy);
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  padding-top: 68px;
+}
+.hero-accent-left {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 5px;
+  background: var(--mint);
+}
+.hero-bg-shape {
+  position: absolute;
+  right: 0; top: 0; bottom: 0;
+  width: 36%;
+  background: var(--navy2);
+  clip-path: polygon(12% 0, 100% 0, 100% 100%, 0% 100%);
+}
+.hero-bg-shape2 {
+  position: absolute;
+  right: 0; top: 0; bottom: 0;
+  width: 18%;
+  background: #061520;
+  clip-path: polygon(20% 0, 100% 0, 100% 100%, 0% 100%);
+}
+.hero-divider {
+  position: absolute;
+  left: 5px; right: 0;
+  height: 3px;
+  background: var(--mint);
+  top: 63%;
+}
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 62%;
+  padding: 72px 0;
+}
+.hero-eyebrow {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--mint);
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 4.8vw, 60px);
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1.1;
+  margin-bottom: 14px;
+  letter-spacing: -0.01em;
+}
+.hero-subtitle {
+  font-family: var(--font-display);
+  font-size: clamp(17px, 2vw, 22px);
+  font-weight: 400;
+  color: #a8c8d8;
+  margin-bottom: 32px;
+  letter-spacing: 0.01em;
+}
+.hero-tagline {
+  background: var(--navy2);
+  border-left: 3px solid var(--mint);
+  padding: 16px 22px;
+  font-size: 14px;
+  color: #a8c8d8;
+  line-height: 1.65;
+  max-width: 580px;
+  margin-bottom: 40px;
+}
+.hero-actions {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.btn-primary {
+  display: inline-block;
+  background: var(--mint);
+  color: var(--navy);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  padding: 13px 30px;
+  border-radius: var(--radius);
+  letter-spacing: 0.02em;
+  transition: background var(--transition), transform var(--transition);
+}
+.btn-primary:hover { background: #18d4c0; transform: translateY(-2px); }
+.btn-secondary {
+  display: inline-block;
+  color: rgba(255,255,255,0.6);
+  font-size: 13px;
+  font-weight: 400;
+  padding: 13px 0;
+  letter-spacing: 0.02em;
+  border-bottom: 1px solid rgba(255,255,255,0.18);
+  transition: color var(--transition), border-color var(--transition);
+}
+.btn-secondary:hover { color: var(--white); border-color: rgba(255,255,255,0.45); }
+
+/* ── SECTION HEADERS ──────────────────────────────── */
+.section-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--mint);
+  margin-bottom: 12px;
+}
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(24px, 3.2vw, 38px);
+  font-weight: 700;
+  line-height: 1.18;
+  margin-bottom: 18px;
+  letter-spacing: -0.01em;
+}
+.section-title.light { color: var(--white); }
+.section-title.dark  { color: var(--navy); }
+.section-lead {
+  font-size: 15px;
+  color: var(--muted);
+  max-width: 620px;
+  line-height: 1.7;
+}
+
+/* ── VÝZVA ────────────────────────────────────────── */
+#vyzva { padding: var(--section-pad); background: var(--light); }
+.challenge-header { text-align: center; max-width: 700px; margin: 0 auto 40px; }
+.challenge-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 28px;
+}
+.challenge-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 3px 16px rgba(10,35,66,0.07);
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+.challenge-card:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(10,35,66,0.12); }
+.challenge-card-header {
+  background: var(--teal);
+  padding: 15px 22px;
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--white);
+}
+.challenge-card-body {
+  padding: 18px 22px 24px;
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+.challenge-bar {
+  background: var(--mint);
+  padding: 16px 28px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--navy);
+  border-radius: var(--radius);
+}
+
+/* ── KDO JSME ─────────────────────────────────────── */
+#kdo-jsme { padding: var(--section-pad); background: var(--navy); position: relative; overflow: hidden; }
+.who-bg { position: absolute; right: 0; top: 0; bottom: 0; width: 38%; background: var(--navy2); }
+.who-grid {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 72px;
+  position: relative;
+  z-index: 2;
+  align-items: start;
+}
+.who-left .section-lead { color: #a8c8d8; margin-bottom: 32px; }
+.who-differentiators { display: flex; flex-direction: column; gap: 12px; }
+.who-diff-item { display: flex; align-items: center; gap: 14px; }
+.who-diff-num {
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  background: var(--mint);
+  color: var(--navy);
+  font-size: 12px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.who-diff-text { font-size: 14px; color: var(--white); line-height: 1.5; }
+.who-right { border-left: 1px solid rgba(255,255,255,0.09); padding-left: 44px; }
+.who-parent { font-size: 11px; color: #5a7a8e; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 7px; }
+.who-parent-name { font-family: var(--font-display); font-size: 20px; font-weight: 700; color: var(--white); margin-bottom: 24px; }
+.who-divider { height: 2px; width: 60px; background: var(--mint); margin-bottom: 28px; }
+.who-stats { display: flex; flex-direction: column; gap: 20px; }
+.who-stat-value { font-family: var(--font-display); font-size: 18px; font-weight: 700; color: var(--mint); line-height: 1.2; }
+.who-stat-label { font-size: 12px; color: #7aaabb; margin-top: 2px; }
+
+/* ── PROČ KLIENTI ─────────────────────────────────── */
+#proc-klienti { padding: var(--section-pad); background: var(--white); }
+.clients-header { margin-bottom: 36px; }
+.clients-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.client-card {
+  border-left: 4px solid var(--teal);
+  background: var(--light);
+  padding: 18px 22px;
+  border-radius: 0 var(--radius) var(--radius) 0;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+.client-card:hover { border-color: var(--mint); box-shadow: 0 4px 18px rgba(10,35,66,0.07); }
+.client-card-q { font-size: 14px; font-weight: 600; color: var(--navy); margin-bottom: 8px; line-height: 1.4; }
+.client-card-a { font-size: 13px; color: var(--muted); line-height: 1.68; }
+
+/* ── NÁŠ PŘÍSTUP ──────────────────────────────────── */
+#pristup { padding: var(--section-pad); background: var(--light); }
+.approach-header-bar { background: var(--teal); border-radius: var(--radius); margin-bottom: 40px; }
+.approach-header-inner { padding: 22px 28px; }
+.approach-header-inner .section-label { color: rgba(255,255,255,0.65); }
+.approach-header-inner .section-title { color: var(--white); margin-bottom: 0; }
+.pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.pillar {
+  background: var(--white);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 3px 18px rgba(10,35,66,0.07);
+  transition: transform var(--transition);
+}
+.pillar:hover { transform: translateY(-3px); }
+.pillar-header { padding: 20px 22px 16px; }
+.pillar:nth-child(1) .pillar-header { background: var(--navy); }
+.pillar:nth-child(2) .pillar-header { background: var(--teal); }
+.pillar:nth-child(3) .pillar-header { background: #1A5276; }
+.pillar-num { font-family: var(--font-display); font-size: 28px; font-weight: 800; color: rgba(255,255,255,0.12); line-height: 1; margin-bottom: 5px; }
+.pillar-title { font-family: var(--font-display); font-size: 16px; font-weight: 700; color: var(--white); }
+.pillar-body { padding: 20px 22px; display: flex; flex-direction: column; }
+.pillar-point { font-size: 13px; color: var(--muted); padding: 10px 0; line-height: 1.62; border-bottom: 1px solid var(--card-border); }
+.pillar-point:last-child { border-bottom: none; }
+
+/* ── EXPERTÍZA ────────────────────────────────────── */
+#expertiza { padding: var(--section-pad); background: var(--navy); }
+.expertiza-header { margin-bottom: 36px; }
+.areas-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 48px; }
+.area-card {
+  background: var(--navy2);
+  border: 1px solid var(--navy3);
+  border-radius: var(--radius);
+  padding: 22px 20px 18px;
+  transition: border-color var(--transition), transform var(--transition);
+}
+.area-card:hover { border-color: var(--teal); transform: translateY(-2px); }
+.area-num { font-size: 11px; font-weight: 700; color: #1a4a60; margin-bottom: 5px; letter-spacing: 0.08em; }
+.area-title { font-family: var(--font-display); font-size: 14px; font-weight: 600; color: var(--white); margin-bottom: 14px; line-height: 1.4; }
+.area-points { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+.area-points li { font-size: 13px; color: #7aaabb; padding-left: 14px; position: relative; line-height: 1.52; }
+.area-points li::before { content: '·'; position: absolute; left: 3px; color: var(--teal); font-size: 16px; line-height: 1.15; }
+
+/* PA Deep-dive */
+.pa-section { border-top: 1px solid var(--navy3); padding-top: 40px; }
+.pa-intro { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; margin-bottom: 28px; align-items: end; }
+.pa-label { font-size: 11px; font-weight: 600; letter-spacing: 0.28em; color: var(--mint); text-transform: uppercase; margin-bottom: 10px; }
+.pa-title { font-family: var(--font-display); font-size: clamp(20px, 2.5vw, 28px); font-weight: 700; color: var(--white); line-height: 1.22; letter-spacing: -0.01em; }
+.pa-perex { font-size: 14px; color: #7aaabb; line-height: 1.72; padding-top: 6px; }
+.pa-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+.pa-card { background: var(--navy2); border-radius: var(--radius); padding: 20px 22px; border-left: 4px solid var(--teal); transition: border-color var(--transition); }
+.pa-card.highlight { border-color: var(--mint); }
+.pa-card-title { font-family: var(--font-display); font-size: 14px; font-weight: 600; color: var(--white); margin-bottom: 9px; line-height: 1.38; }
+.pa-card.highlight .pa-card-title { color: var(--mint); }
+.pa-card-body { font-size: 13px; color: #7aaabb; line-height: 1.68; }
+
+/* ── ROZSAH ───────────────────────────────────────── */
+#rozsah { padding: var(--section-pad); background: var(--white); }
+.rozsah-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; position: relative; }
+.rozsah-grid::after { content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: var(--card-border); }
+.rozsah-col-title { font-family: var(--font-display); font-size: 14px; font-weight: 700; color: var(--teal); letter-spacing: 0.03em; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid var(--mint); display: inline-block; }
+.rozsah-list { list-style: none; }
+.rozsah-list li { font-size: 14px; color: var(--dark); padding: 11px 0 11px 20px; border-bottom: 1px solid var(--card-border); position: relative; line-height: 1.52; }
+.rozsah-list li::before { content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 5px; height: 5px; border-radius: 50%; background: var(--teal); }
+.rozsah-footer { margin-top: 36px; background: var(--teal); padding: 17px 28px; border-radius: var(--radius); font-size: 14px; color: var(--white); text-align: center; line-height: 1.6; }
+
+/* ── COMPLIANCE ───────────────────────────────────── */
+#compliance { padding: var(--section-pad); background: var(--light); overflow: hidden; }
+.compliance-grid { display: grid; grid-template-columns: 360px 1fr; gap: 72px; align-items: start; }
+.compliance-left { background: var(--navy); border-radius: var(--radius); padding: 40px 38px; }
+.compliance-shield { width: 64px; height: 64px; margin-bottom: 24px; }
+.compliance-shield svg { width: 64px; height: 64px; }
+.compliance-statement { font-family: var(--font-display); font-size: 28px; font-weight: 700; color: var(--white); line-height: 1.18; margin: 12px 0 20px; letter-spacing: -0.01em; }
+.compliance-desc { font-size: 13px; color: #7aaabb; line-height: 1.72; }
+.compliance-right-title { font-family: var(--font-display); font-size: 17px; font-weight: 600; color: var(--navy); margin-bottom: 24px; }
+.compliance-items { display: flex; flex-direction: column; gap: 16px; }
+.compliance-item {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 18px 22px;
+  box-shadow: 0 2px 12px rgba(10,35,66,0.05);
+  border-left: 4px solid var(--teal);
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+.compliance-item:hover { border-color: var(--mint); box-shadow: 0 4px 20px rgba(10,35,66,0.09); }
+.compliance-item-title { font-size: 14px; font-weight: 600; color: var(--navy); margin-bottom: 6px; }
+.compliance-item-body { font-size: 13px; color: var(--muted); line-height: 1.68; }
+
+/* ── PROČ MY ──────────────────────────────────────── */
+#proc-my { padding: var(--section-pad); background: var(--white); }
+.why-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.why-card {
+  background: var(--light);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+.why-card:hover { border-color: var(--teal); box-shadow: 0 4px 18px rgba(10,35,66,0.06); }
+.why-icon {
+  width: 36px; height: 36px;
+  background: var(--teal);
+  border-radius: var(--radius);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0; margin-top: 1px;
+}
+.why-icon svg { width: 17px; height: 17px; fill: var(--white); }
+.why-card-title { font-size: 14px; font-weight: 600; color: var(--navy); margin-bottom: 6px; line-height: 1.38; }
+.why-card-body { font-size: 13px; color: var(--muted); line-height: 1.68; }
+
+/* ── REFERENCE ────────────────────────────────────── */
+#reference { padding: var(--section-pad); background: var(--navy); position: relative; overflow: hidden; }
+.reference-bg { position: absolute; right: 0; top: 0; bottom: 0; width: 38%; background: var(--navy2); }
+.reference-grid { display: grid; grid-template-columns: 1fr 280px; gap: 72px; position: relative; z-index: 2; align-items: start; }
+.reference-left .section-title { font-size: clamp(24px, 2.8vw, 36px); font-weight: 700; color: var(--white); margin-bottom: 14px; }
+.reference-subtitle { font-size: 14px; color: #7aaabb; margin-bottom: 28px; line-height: 1.68; }
+.reference-points { list-style: none; }
+.reference-points li { font-size: 13px; color: #a8c8d8; padding: 10px 0 10px 18px; border-bottom: 1px solid rgba(255,255,255,0.05); position: relative; line-height: 1.58; }
+.reference-points li::before { content: ''; position: absolute; left: 0; top: 17px; width: 5px; height: 5px; border-radius: 50%; background: var(--teal); }
+.reference-right-title { font-size: 11px; color: #5a7a8e; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px; }
+.client-types { list-style: none; }
+.client-types li { font-size: 14px; color: var(--white); padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.06); line-height: 1.5; }
+
+/* ── KONTAKT ──────────────────────────────────────── */
+#kontakt { padding: var(--section-pad); background: var(--teal); position: relative; overflow: hidden; }
+.kontakt-accent { position: absolute; left: 0; top: 0; bottom: 0; width: 5px; background: var(--mint); }
+.kontakt-grid { display: grid; grid-template-columns: 1fr 440px; gap: 72px; align-items: start; }
+.kontakt-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.28em; color: rgba(255,255,255,0.6); text-transform: uppercase; margin-bottom: 14px; }
+.kontakt-title { font-family: var(--font-display); font-size: clamp(26px, 3.2vw, 40px); font-weight: 700; color: var(--white); line-height: 1.12; margin-bottom: 18px; letter-spacing: -0.01em; }
+.kontakt-lead { font-size: 15px; color: rgba(255,255,255,0.82); line-height: 1.72; margin-bottom: 24px; max-width: 500px; }
+.kontakt-note { font-size: 12px; color: rgba(255,255,255,0.5); letter-spacing: 0.02em; }
+.kontakt-card { background: var(--navy); border-radius: var(--radius); padding: 36px 36px 40px; }
+.kontakt-card-title { font-family: var(--font-display); font-size: 16px; font-weight: 700; color: var(--white); margin-bottom: 24px; }
+
+/* Form */
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+.form-group { display: flex; flex-direction: column; gap: 5px; margin-bottom: 0; }
+.form-group.full { margin-bottom: 12px; }
+.form-group label { font-size: 11px; font-weight: 600; color: #7aaabb; letter-spacing: 0.08em; text-transform: uppercase; }
+.form-group input,
+.form-group textarea,
+.form-group select {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: var(--radius);
+  padding: 11px 14px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--white);
+  transition: border-color var(--transition), background var(--transition);
+  outline: none;
+  width: 100%;
+}
+.form-group input::placeholder,
+.form-group textarea::placeholder { color: rgba(255,255,255,0.3); }
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  border-color: var(--mint);
+  background: rgba(255,255,255,0.09);
+}
+.form-group select option { background: var(--navy2); color: var(--white); }
+.form-group textarea { resize: vertical; min-height: 90px; }
+.form-submit {
+  display: block;
+  width: 100%;
+  background: var(--mint);
+  color: var(--navy);
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 700;
+  padding: 14px 24px;
+  text-align: center;
+  border-radius: var(--radius);
+  letter-spacing: 0.04em;
+  border: none;
+  cursor: pointer;
+  transition: background var(--transition), transform var(--transition);
+  margin-top: 16px;
+}
+.form-submit:hover { background: #18d4c0; transform: translateY(-2px); }
+.form-contacts { display: flex; gap: 24px; margin-top: 18px; flex-wrap: wrap; }
+.form-contact-item { display: flex; align-items: center; gap: 8px; }
+.form-contact-item svg { width: 14px; height: 14px; fill: var(--mint); flex-shrink: 0; }
+.form-contact-item a { font-size: 13px; color: #7aaabb; transition: color var(--transition); }
+.form-contact-item a:hover { color: var(--mint); }
+.kontakt-parent { margin-top: 16px; text-align: center; font-size: 11px; color: #3a5a6e; }
+.kontakt-parent strong { color: #5a7a8e; }
+
+/* ── FOOTER ───────────────────────────────────────── */
+footer {
+  background: #061520;
+  padding: 28px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 6px;
+}
+.footer-logo { font-family: var(--font-display); font-size: 14px; font-weight: 700; color: rgba(255,255,255,0.5); letter-spacing: 0.02em; margin-bottom: 4px; }
+.footer-line { font-size: 12px; color: #3a5a6e; line-height: 1.5; }
+.footer-right { font-size: 12px; color: #2a4a5e; margin-top: 4px; }
+
+/* ── RESPONSIVE ───────────────────────────────────── */
+@media (max-width: 980px) {
+  :root { --section-pad: 56px 0; }
+  .challenge-cards     { grid-template-columns: 1fr; }
+  .who-grid            { grid-template-columns: 1fr; gap: 40px; }
+  .who-bg              { display: none; }
+  .who-right           { border-left: none; border-top: 1px solid rgba(255,255,255,0.09); padding-left: 0; padding-top: 28px; }
+  .clients-grid        { grid-template-columns: 1fr; }
+  .pillars             { grid-template-columns: 1fr; }
+  .areas-grid          { grid-template-columns: repeat(2, 1fr); }
+  .pa-intro            { grid-template-columns: 1fr; gap: 20px; }
+  .pa-cards            { grid-template-columns: 1fr; }
+  .rozsah-grid         { grid-template-columns: 1fr; gap: 36px; }
+  .rozsah-grid::after  { display: none; }
+  .compliance-grid     { grid-template-columns: 1fr; }
+  .why-grid            { grid-template-columns: 1fr; }
+  .reference-grid      { grid-template-columns: 1fr; gap: 40px; }
+  .reference-bg        { display: none; }
+  .kontakt-grid        { grid-template-columns: 1fr; gap: 36px; }
+  .hero-content        { max-width: 100%; }
+  .hero-bg-shape, .hero-bg-shape2 { display: none; }
+  .nav-links           { display: none; }
+  .nav-hamburger       { display: flex; }
+  .form-row            { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  .container           { padding: 0 20px; }
+  :root { --section-pad: 48px 0; }
+  .areas-grid          { grid-template-columns: 1fr; }
+  footer               { padding: 24px 20px; }
+  .footer-right        { text-align: center; }
+}
+</style>
+
+<!-- ═══════════════════════════════════════════════════
+     COOKIE CONSENT — STYLES
+     ═══════════════════════════════════════════════════ -->
+<style>
+/* Banner overlay */
+#cookie-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 35, 66, 0.55);
+  z-index: 9000;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 24px;
+  backdrop-filter: blur(2px);
+}
+#cookie-overlay.hidden { display: none; }
+
+#cookie-banner {
+  background: #0D2E46;
+  border-top: 3px solid #14BDAC;
+  border-radius: 4px;
+  max-width: 880px;
+  width: 100%;
+  box-shadow: 0 -4px 40px rgba(0,0,0,0.4);
+  overflow: hidden;
+}
+
+.cookie-main {
+  padding: 28px 32px 24px;
+}
+
+.cookie-title {
+  font-family: 'Barlow', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cookie-title svg {
+  width: 18px; height: 18px;
+  fill: #14BDAC;
+  flex-shrink: 0;
+}
+
+.cookie-text {
+  font-size: 13px;
+  color: #7AAABB;
+  line-height: 1.68;
+  margin-bottom: 22px;
+  max-width: 660px;
+}
+
+.cookie-text a {
+  color: #14BDAC;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Category toggles */
+.cookie-categories {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.cookie-cat {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 3px;
+  padding: 14px 16px;
+  transition: border-color 0.2s;
+}
+.cookie-cat:has(input:checked) { border-color: #0D7377; }
+
+.cookie-cat-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.cookie-cat-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #FFFFFF;
+}
+
+.cookie-cat-desc {
+  font-size: 12px;
+  color: #5E7A8A;
+  line-height: 1.55;
+}
+
+/* Toggle switch */
+.toggle {
+  position: relative;
+  width: 36px;
+  height: 20px;
+  flex-shrink: 0;
+}
+.toggle input { opacity: 0; width: 0; height: 0; }
+.toggle-slider {
+  position: absolute;
+  inset: 0;
+  background: #1B3A50;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background 0.2s;
+  border: 1px solid rgba(255,255,255,0.12);
+}
+.toggle-slider::before {
+  content: '';
+  position: absolute;
+  width: 14px; height: 14px;
+  left: 2px; top: 2px;
+  background: #5E7A8A;
+  border-radius: 50%;
+  transition: transform 0.2s, background 0.2s;
+}
+.toggle input:checked + .toggle-slider { background: #0D7377; border-color: #0D7377; }
+.toggle input:checked + .toggle-slider::before { transform: translateX(16px); background: #FFFFFF; }
+.toggle input:disabled + .toggle-slider { opacity: 0.5; cursor: not-allowed; }
+
+/* Action buttons */
+.cookie-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 16px 32px 24px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  background: rgba(0,0,0,0.15);
+}
+
+.cookie-btn {
+  font-family: 'Barlow', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 10px 22px;
+  border-radius: 3px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+  letter-spacing: 0.02em;
+}
+.cookie-btn:hover { transform: translateY(-1px); }
+.cookie-btn-accept-all { background: #14BDAC; color: #0A2342; }
+.cookie-btn-accept-all:hover { background: #18d4c0; }
+.cookie-btn-save { background: #0D7377; color: #FFFFFF; }
+.cookie-btn-save:hover { background: #0f8a8f; }
+.cookie-btn-reject { background: transparent; color: #5E7A8A; border: 1px solid rgba(255,255,255,0.12); }
+.cookie-btn-reject:hover { color: #FFFFFF; border-color: rgba(255,255,255,0.3); }
+
+.cookie-legal {
+  margin-left: auto;
+  font-size: 11px;
+  color: #3A5A6E;
+}
+
+/* Preferences panel (secondary) */
+#cookie-prefs-btn {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 8999;
+  background: #0A2342;
+  border: 1px solid #133A52;
+  border-radius: 50%;
+  width: 40px; height: 40px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+  transition: background 0.2s;
+}
+#cookie-prefs-btn:hover { background: #0D2E46; }
+#cookie-prefs-btn svg { width: 16px; height: 16px; fill: #14BDAC; }
+#cookie-prefs-btn.hidden { display: none; }
+
+@media (max-width: 640px) {
+  .cookie-main { padding: 22px 20px 18px; }
+  .cookie-categories { grid-template-columns: 1fr; }
+  .cookie-actions { padding: 14px 20px 20px; flex-direction: column; align-items: stretch; }
+  .cookie-btn { text-align: center; }
+  .cookie-legal { margin-left: 0; }
+}
+</style>
+
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════
+     COOKIE CONSENT BANNER
+     ═══════════════════════════════════════════════════ -->
+<div id="cookie-overlay">
+  <div id="cookie-banner" role="dialog" aria-modal="true" aria-label="Nastavení cookies">
+    <div class="cookie-main">
+      <div class="cookie-title">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+        Tento web používá cookies
+      </div>
+      <p class="cookie-text">
+        Cookies používáme pro zajištění funkčnosti webu, analýzu návštěvnosti a cílený remarketing. Svůj souhlas můžete kdykoli změnit kliknutím na ikonu nastavení v levém dolním rohu.
+        Zpracování dat se řídí <a href="zasady-ochrany-osobnich-udaju.html">Zásadami ochrany osobních údajů</a>.
+      </p>
+      <div class="cookie-categories">
+        <div class="cookie-cat">
+          <div class="cookie-cat-header">
+            <span class="cookie-cat-name">Nezbytné</span>
+            <label class="toggle">
+              <input type="checkbox" id="cat-necessary" checked disabled>
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          <div class="cookie-cat-desc">Zajišťují základní funkce webu (navigace, formulář). Vždy aktivní, nelze vypnout.</div>
+        </div>
+        <div class="cookie-cat">
+          <div class="cookie-cat-header">
+            <span class="cookie-cat-name">Analytické</span>
+            <label class="toggle">
+              <input type="checkbox" id="cat-analytics">
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          <div class="cookie-cat-desc">Google Analytics 4 — anonymní měření návštěvnosti, chování uživatelů a zdrojů trafficu.</div>
+        </div>
+      </div>
+    </div>
+    <div class="cookie-actions">
+      <button class="cookie-btn cookie-btn-accept-all" onclick="cookieAcceptAll()">Přijmout vše</button>
+      <button class="cookie-btn cookie-btn-save" onclick="cookieSavePrefs()">Uložit volbu</button>
+      <button class="cookie-btn cookie-btn-reject" onclick="cookieRejectAll()">Pouze nezbytné</button>
+      <span class="cookie-legal">Omnimedia s.r.o. &mdash; GDPR / ePrivacy</span>
+    </div>
+  </div>
+</div>
+
+<!-- Tlačítko pro opětovné otevření preferencí -->
+<button id="cookie-prefs-btn" class="hidden" onclick="cookieReopenBanner()" title="Nastavení cookies" aria-label="Nastavení cookies">
+  <svg viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+</button>
+
+
+<nav id="main-nav">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="#hero" class="nav-logo">
+        <span class="nav-logo-primary">MedRelations</span>
+        <span class="nav-logo-secondary">Communications</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#vyzva">Výzva</a></li>
+        <li><a href="#kdo-jsme">Kdo jsme</a></li>
+        <li><a href="#expertiza">Expertíza</a></li>
+        <li><a href="#compliance">Compliance</a></li>
+        <li><a href="#proc-my">Proč my</a></li>
+        <li><a href="#reference">Reference</a></li>
+        <li><a href="#kontakt" class="nav-cta">Konzultace</a></li>
+      </ul>
+      <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+  <div class="nav-mobile" id="mobile-menu">
+    <a href="#vyzva">Výzva</a>
+    <a href="#kdo-jsme">Kdo jsme</a>
+    <a href="#expertiza">Expertíza</a>
+    <a href="#compliance">Compliance</a>
+    <a href="#proc-my">Proč my</a>
+    <a href="#reference">Reference</a>
+    <a href="#kontakt">Konzultace →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-accent-left"></div>
+  <div class="hero-bg-shape"></div>
+  <div class="hero-bg-shape2"></div>
+  <div class="hero-divider"></div>
+  <div class="container">
+    <div class="hero-content">
+      <p class="hero-eyebrow reveal">Strategická zdravotnická komunikace</p>
+      <h1 class="hero-title reveal reveal-delay-1">MedRelations<br>Communications</h1>
+      <p class="hero-subtitle reveal reveal-delay-2">pro regulované prostředí</p>
+      <div class="hero-tagline reveal reveal-delay-3">
+        Pomáháme farmaceutickým společnostem a odborníkům ve zdravotnictví komunikovat bezpečně, srozumitelně a v plném souladu s regulací.
+      </div>
+      <div class="hero-actions reveal reveal-delay-4">
+        <a href="#kontakt" class="btn-primary">Domluvit konzultaci</a>
+        <a href="#kdo-jsme" class="btn-secondary">Více o agentuře</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VÝZVA -->
+<section id="vyzva">
+  <div class="container">
+    <div class="challenge-header">
+      <p class="section-label reveal">Výzva</p>
+      <h2 class="section-title dark reveal reveal-delay-1">Zdravotnická komunikace má vlastní pravidla</h2>
+    </div>
+    <div class="challenge-cards">
+      <div class="challenge-card reveal reveal-delay-1">
+        <div class="challenge-card-header">Složitá regulace</div>
+        <div class="challenge-card-body">Farmaceutická a zdravotnická komunikace podléhá přísným právním a etickým rámcům, které nepřipouštějí chybu.</div>
+      </div>
+      <div class="challenge-card reveal reveal-delay-2">
+        <div class="challenge-card-header">Medicínská přesnost</div>
+        <div class="challenge-card-body">Sdílení informací musí být medicínsky přesné, založené na ověřených datech a v souladu s klinickými studiemi — generické PR agentury na to nejsou vybaveny.</div>
+      </div>
+      <div class="challenge-card reveal reveal-delay-3">
+        <div class="challenge-card-header">Mnoho zainteresovaných aktérů</div>
+        <div class="challenge-card-body">Úspěšná komunikace musí sladit média, odborníky, pacientské organizace, plátce i regulátory — zároveň a bez kompromisů.</div>
+      </div>
+    </div>
+    <div class="challenge-bar reveal">MedRelations Communications je agentura budovaná výhradně pro toto prostředí.</div>
+  </div>
+</section>
+
+<!-- KDO JSME -->
+<section id="kdo-jsme">
+  <div class="who-bg"></div>
+  <div class="container">
+    <div class="who-grid">
+      <div class="who-left">
+        <p class="section-label reveal">Kdo jsme</p>
+        <h2 class="section-title light reveal reveal-delay-1">MedRelations<br>Communications</h2>
+        <p class="section-lead reveal reveal-delay-2">Specializovaná komunikační agentura zaměřená výhradně na farmaceutické společnosti, biotechnologické firmy, výrobce zdravotnických prostředků a zdravotnické instituce.</p>
+        <div class="who-differentiators">
+          <div class="who-diff-item reveal reveal-delay-3">
+            <div class="who-diff-num">1</div>
+            <div class="who-diff-text">Medicínská odbornost jako základ každé strategie</div>
+          </div>
+          <div class="who-diff-item reveal reveal-delay-4">
+            <div class="who-diff-num">2</div>
+            <div class="who-diff-text">Regulatorní soulad integrovaný do každého výstupu</div>
+          </div>
+          <div class="who-diff-item reveal reveal-delay-5">
+            <div class="who-diff-num">3</div>
+            <div class="who-diff-text">Propojení public relations a public affairs</div>
+          </div>
+        </div>
+      </div>
+      <div class="who-right reveal reveal-delay-2">
+        <p class="who-parent">Součástí skupiny</p>
+        <p class="who-parent-name">Omnimedia s.r.o.</p>
+        <div class="who-divider"></div>
+        <div class="who-stats">
+          <div><div class="who-stat-value">Česká republika</div><div class="who-stat-label">Primární trh</div></div>
+          <div><div class="who-stat-value">Full-service</div><div class="who-stat-label">Healthcare PR &amp; PA</div></div>
+          <div><div class="who-stat-value">100 %</div><div class="who-stat-label">Zaměření na regulovaný sektor</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROČ KLIENTI -->
+<section id="proc-klienti">
+  <div class="container">
+    <div class="clients-header">
+      <p class="section-label reveal">Proč si nás klienti vybírají</p>
+      <h2 class="section-title dark reveal reveal-delay-1">Řešíme komunikační výzvy, které generické agentury nedokáží zvládnout.</h2>
+    </div>
+    <div class="clients-grid">
+      <div class="client-card reveal reveal-delay-1">
+        <div class="client-card-q">Disease awareness bez regulatorního rizika?</div>
+        <div class="client-card-a">Navrhujeme edukační kampaně pro pacienty i veřejnost, které jsou medicínsky přesné a plně v souladu s regulací.</div>
+      </div>
+      <div class="client-card reveal reveal-delay-2">
+        <div class="client-card-q">Připravujete uvedení nového Rx produktu na trh?</div>
+        <div class="client-card-a">Podporujeme launch nepřímou komunikací, zapojením klíčových odborníků a cílenou mediální strategií.</div>
+      </div>
+      <div class="client-card reveal reveal-delay-1">
+        <div class="client-card-q">Tlak úhradových rozhodnutí?</div>
+        <div class="client-card-a">Vedeme dialog s plátci péče, tvůrci zdravotní politiky a pacientskými organizacemi — a v případě potřeby ho přenášíme až do legislativního procesu.</div>
+      </div>
+      <div class="client-card reveal reveal-delay-2">
+        <div class="client-card-q">Adaptace globální kampaně na český trh?</div>
+        <div class="client-card-a">Lokalizujeme sdělení s ohledem na české regulatorní, mediální i kulturní specifika.</div>
+      </div>
+      <div class="client-card reveal reveal-delay-1">
+        <div class="client-card-q">Citlivá mediální situace ve vaší oblasti?</div>
+        <div class="client-card-a">Řešíme krizovou komunikaci a citlivá témata s přesností a diskrétností.</div>
+      </div>
+      <div class="client-card reveal reveal-delay-2">
+        <div class="client-card-q">Kvalitní produkt, který odborná veřejnost nezná?</div>
+        <div class="client-card-a">Budujeme vědeckou kredibilitu prostřednictvím cíleného profilování a spolupráce s klíčovými odborníky.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NÁŠ PŘÍSTUP -->
+<section id="pristup">
+  <div class="container">
+    <div class="approach-header-bar reveal">
+      <div class="approach-header-inner">
+        <p class="section-label">Náš přístup</p>
+        <h2 class="section-title">Tři pilíře, které odlišují MedRelations od ostatních</h2>
+      </div>
+    </div>
+    <div class="pillars">
+      <div class="pillar reveal reveal-delay-1">
+        <div class="pillar-header"><div class="pillar-num">01</div><div class="pillar-title">Medicínská odbornost</div></div>
+        <div class="pillar-body">
+          <div class="pillar-point">Hluboké porozumění chorobám, terapeutickým oblastem a klinickým datům</div>
+          <div class="pillar-point">Vědecky přesná sdělení, která budují kredibilitu</div>
+          <div class="pillar-point">Důvěryhodná pro odborníky i regulatorní instituce</div>
+        </div>
+      </div>
+      <div class="pillar reveal reveal-delay-2">
+        <div class="pillar-header"><div class="pillar-num">02</div><div class="pillar-title">Regulatorní soulad</div></div>
+        <div class="pillar-body">
+          <div class="pillar-point">Právní a etické rámce integrovány už od projektového briefu</div>
+          <div class="pillar-point">Soulad s farmaceutickými etickými kodexy, tiskovým právem a GDPR</div>
+          <div class="pillar-point">Každý výstup respektuje schvalovací procesy klienta</div>
+        </div>
+      </div>
+      <div class="pillar reveal reveal-delay-3">
+        <div class="pillar-header"><div class="pillar-num">03</div><div class="pillar-title">Strategická koordinace</div></div>
+        <div class="pillar-body">
+          <div class="pillar-point">Mediální, odborná a institucionální komunikace propojené do jednoho celku</div>
+          <div class="pillar-point">Modulární struktura — vstup do projektu v jakékoli fázi</div>
+          <div class="pillar-point">PR a PA jako jedna integrovaná funkce</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERTÍZA -->
+<section id="expertiza">
+  <div class="container">
+    <div class="expertiza-header">
+      <p class="section-label reveal">Oblasti expertízy</p>
+      <h2 class="section-title light reveal reveal-delay-1">Šest integrovaných oblastí. Jedna specializovaná agentura.</h2>
+    </div>
+    <div class="areas-grid">
+      <div class="area-card reveal reveal-delay-1">
+        <div class="area-num">01</div>
+        <div class="area-title">Komunikace nemoci a veřejného zdraví</div>
+        <ul class="area-points"><li>Disease awareness a edukace pacientů</li><li>Zodpovědná komunikace klinických dat</li><li>Media relations, advertorialy &amp; social media</li></ul>
+      </div>
+      <div class="area-card reveal reveal-delay-2">
+        <div class="area-num">02</div>
+        <div class="area-title">Medicínské a vědecké profilování</div>
+        <ul class="area-points"><li>Profilace odborníků a pracovišť</li><li>Komunikace výzkumu a klinických studií</li><li>Zavedené modely spolupráce s KOL</li></ul>
+      </div>
+      <div class="area-card reveal reveal-delay-3">
+        <div class="area-num">03</div>
+        <div class="area-title">Adaptace globálních strategií na CZ trh</div>
+        <ul class="area-points"><li>Lokální mediální a kulturní dynamika</li><li>Soulad s českou regulatorní praxí</li><li>Převod globálních sdělení do místního kontextu</li></ul>
+      </div>
+      <div class="area-card reveal reveal-delay-1">
+        <div class="area-num">04</div>
+        <div class="area-title">Public Affairs a stakeholder relations</div>
+        <ul class="area-points"><li>Mapování a zapojení stakeholderů</li><li>Dialog s odbornými společnostmi</li><li>Integrované PR + PA na komplexních projektech</li></ul>
+      </div>
+      <div class="area-card reveal reveal-delay-2">
+        <div class="area-num">05</div>
+        <div class="area-title">Produktová komunikace (OTC, Rx, zdrav. prostředky)</div>
+        <ul class="area-points"><li>Komunikační podpora launchů</li><li>Lifecycle komunikace</li><li>Komunikace kolem úhrad a reg. milníků</li></ul>
+      </div>
+      <div class="area-card reveal reveal-delay-3">
+        <div class="area-num">06</div>
+        <div class="area-title">Korporátní a reputační komunikace</div>
+        <ul class="area-points"><li>Korporátní komunikace ve zdravotnictví</li><li>Řízení citlivých komunikačních situací</li><li>Podpora interní komunikace</li></ul>
+      </div>
+    </div>
+
+    <div class="pa-section">
+      <div class="pa-intro">
+        <div>
+          <p class="pa-label reveal">Public Affairs &amp; Legislativní prostředí</p>
+          <h3 class="pa-title reveal reveal-delay-1">Regulatorní prostředí lze efektivně navigovat — a spoluutvářet.</h3>
+        </div>
+        <p class="pa-perex reveal reveal-delay-2">Při hluboké znalosti fungování systému a jeho klíčových aktérů lze na regulatorní rozhodování, úhradové procesy i legislativní rámec aktivně reagovat — i je spoluutvářet.</p>
+      </div>
+      <div class="pa-cards">
+        <div class="pa-card reveal reveal-delay-1">
+          <div class="pa-card-title">Mapování stakeholderů a řízení rizik</div>
+          <div class="pa-card-body">Identifikace klíčových stakeholderů, analýza jejich postojů a příprava ambasadorů. Včasná identifikace legislativních a reputačních rizik a návrh mitigací.</div>
+        </div>
+        <div class="pa-card highlight reveal reveal-delay-2">
+          <div class="pa-card-title">Parlamentní agenda</div>
+          <div class="pa-card-body">Odborné semináře a kulaté stoly na půdě Poslanecké sněmovny a Senátu. Komunikace témat disease awareness a advocacy ve vazbě na konkrétní legislativní priority: úhrady, preskripce, očkovací programy.</div>
+        </div>
+        <div class="pa-card reveal reveal-delay-3">
+          <div class="pa-card-title">Regulatorní a úhradové advocacy</div>
+          <div class="pa-card-body">Podpora a poradenství v rámci registračních řízení u SÚKL, úhradových a cenových jednání i klíčových fází vstupu přípravku na trh.</div>
+        </div>
+        <div class="pa-card reveal reveal-delay-4">
+          <div class="pa-card-title">Strategické podklady a monitoring</div>
+          <div class="pa-card-body">Příprava position papers a briefing notes, kontinuální legislativní monitoring a propojení PA a PR do jednoho koherentního rámce.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ROZSAH -->
+<section id="rozsah">
+  <div class="container">
+    <p class="section-label reveal">Rozsah spolupráce</p>
+    <h2 class="section-title dark reveal reveal-delay-1" style="margin-bottom:36px">Od jednotlivých výstupů až po víceleté integrované programy</h2>
+    <div class="rozsah-grid">
+      <div>
+        <div class="rozsah-col-title reveal">Obsah a nástroje</div>
+        <ul class="rozsah-list">
+          <li class="reveal reveal-delay-1">Odborné a popularizační texty</li>
+          <li class="reveal reveal-delay-2">Advertorialy &amp; komerční články v odborných, lifestylových a zpravodajských médiích</li>
+          <li class="reveal reveal-delay-3">Social media strategie a správa obsahu</li>
+          <li class="reveal reveal-delay-4">Tiskové konference, semináře a kulaté stoly</li>
+          <li class="reveal reveal-delay-5">Edukační microsites a digitální materiály</li>
+        </ul>
+      </div>
+      <div>
+        <div class="rozsah-col-title reveal">Programy spolupráce</div>
+        <ul class="rozsah-list">
+          <li class="reveal reveal-delay-1">Speciální projekty — roadshow, kontaktní edukační kampaně, výzkumy, reklamní předměty&hellip;</li>
+          <li class="reveal reveal-delay-2">Integrované multi-channel komunikační kampaně</li>
+          <li class="reveal reveal-delay-3">Dlouhodobé / víceleté komunikační programy</li>
+          <li class="reveal reveal-delay-4">Modulární vstup do projektu v jakékoli fázi — od jednoho výstupu po plné řízení</li>
+        </ul>
+      </div>
+    </div>
+    <div class="rozsah-footer reveal">Přizpůsobujeme se struktuře vašeho projektu — ať potřebujete jeden výstup, nebo dlouhodobého partnera.</div>
+  </div>
+</section>
+
+<!-- COMPLIANCE -->
+<section id="compliance">
+  <div class="container">
+    <div class="compliance-grid">
+      <div class="compliance-left reveal">
+        <div class="compliance-shield">
+          <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M32 4L8 14v18c0 13.2 10.4 25.6 24 29 13.6-3.4 24-15.8 24-29V14L32 4z" fill="#14BDAC" fill-opacity="0.15"/>
+            <path d="M32 8L10 17.5v14.5c0 11.8 9.2 22.8 22 26 12.8-3.2 22-14.2 22-26V17.5L32 8z" stroke="#14BDAC" stroke-width="2" fill="none"/>
+            <path d="M22 32l7 7 13-14" stroke="#14BDAC" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <p class="section-label">Compliance</p>
+        <div class="compliance-statement">Compliance není doplněk.<br>Je to základ celého procesu.</div>
+        <p class="compliance-desc">Regulatorní a etické aspekty jsou integrovány od projektového briefu až po finální výstup — bez výjimky.</p>
+      </div>
+      <div>
+        <p class="compliance-right-title reveal">Každý výstup vzniká s plným vědomím:</p>
+        <div class="compliance-items">
+          <div class="compliance-item reveal reveal-delay-1">
+            <div class="compliance-item-title">Platných právních předpisů</div>
+            <div class="compliance-item-body">České a evropské právo v oblasti reklamy na léčiva, tiskový zákon a ochrana osobních údajů.</div>
+          </div>
+          <div class="compliance-item reveal reveal-delay-2">
+            <div class="compliance-item-title">Oborových etických kodexů</div>
+            <div class="compliance-item-body">AIFP, EUCOMED a další relevantní sektorové kodexy upravující zdravotnickou komunikaci.</div>
+          </div>
+          <div class="compliance-item reveal reveal-delay-3">
+            <div class="compliance-item-title">Schvalovacích procesů klienta</div>
+            <div class="compliance-item-body">Všechny výstupy jsou navrhovány tak, aby hladce prošly MLR, medicinským a právním review.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROČ MY -->
+<section id="proc-my">
+  <div class="container">
+    <div class="approach-header-bar reveal">
+      <div class="approach-header-inner">
+        <p class="section-label">Proč MedRelations</p>
+        <h2 class="section-title">Nezávislý partner, který zná systém zevnitř.</h2>
+      </div>
+    </div>
+    <div class="why-grid">
+      <div class="why-card reveal reveal-delay-1">
+        <div class="why-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg></div>
+        <div><div class="why-card-title">Hluboká znalost českého trhu</div><div class="why-card-body">Detailní přehled o českých zdravotnických médiích, institucích a regulatorním prostředí.</div></div>
+      </div>
+      <div class="why-card reveal reveal-delay-2">
+        <div class="why-icon"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+        <div><div class="why-card-title">Zkušenosti z farmacie a zdravotnictví</div><div class="why-card-body">Ověřené výsledky u farmaceutických firem, výrobců zdravotnických prostředků a odborných institucí.</div></div>
+      </div>
+      <div class="why-card reveal reveal-delay-1">
+        <div class="why-icon"><svg viewBox="0 0 24 24"><path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"/></svg></div>
+        <div><div class="why-card-title">Integrované PR + PA</div><div class="why-card-body">Media relations a public affairs koordinované jako jedna koherentní komunikační funkce.</div></div>
+      </div>
+      <div class="why-card reveal reveal-delay-2">
+        <div class="why-icon"><svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></div>
+        <div><div class="why-card-title">Objektivní externí pohled</div><div class="why-card-body">Jako externí agentura přinášíme nestranný strategický nadhled — bez zatížení interní politikou a předchozími rozhodnutími.</div></div>
+      </div>
+      <div class="why-card reveal reveal-delay-1">
+        <div class="why-icon"><svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1s3.1 1.39 3.1 3.1v2z"/></svg></div>
+        <div><div class="why-card-title">Diskrétní a systematický způsob spolupráce</div><div class="why-card-body">Důvěrnost jako standard. Systematická realizace. Precizní dodávky. Žádná zbytečná improvizace.</div></div>
+      </div>
+      <div class="why-card reveal reveal-delay-2">
+        <div class="why-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg></div>
+        <div><div class="why-card-title">Soulad s governance a globální strategií</div><div class="why-card-body">Plně respektujeme korporátní governance, globální strategii a detailní zadání klienta — implementujeme přesně.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REFERENCE -->
+<section id="reference">
+  <div class="reference-bg"></div>
+  <div class="container">
+    <div class="reference-grid">
+      <div class="reference-left">
+        <p class="section-label reveal">Reference</p>
+        <h2 class="section-title reveal reveal-delay-1">Naše práce mluví za sebe — diskrétně, ne nahlas.</h2>
+        <p class="reference-subtitle reveal reveal-delay-2">Důvěrnost je přirozená součást profesionální spolupráce ve zdravotnictví.</p>
+        <ul class="reference-points">
+          <li class="reveal reveal-delay-2">Konkrétní projektové zkušenosti sdílíme individuálně a důvěrně</li>
+          <li class="reveal reveal-delay-3">Case studies prezentujeme po podpisu NDA nebo při formálním výběru agentury</li>
+          <li class="reveal reveal-delay-4">Reference klientů dostupné na vyžádání — se souhlasem klienta</li>
+        </ul>
+      </div>
+      <div class="reveal reveal-delay-3">
+        <p class="reference-right-title">Mezi naše klienty patří:</p>
+        <ul class="client-types">
+          <li>Farmaceutické společnosti</li>
+          <li>Biotechnologické firmy a výrobci zdrav. prostředků</li>
+          <li>Odborné a terapeutické asociace</li>
+          <li>Zdravotnické instituce</li>
+          <li>Pacientské organizace</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- KONTAKT -->
+<section id="kontakt">
+  <div class="kontakt-accent"></div>
+  <div class="container">
+    <div class="kontakt-grid">
+      <div>
+        <p class="kontakt-eyebrow reveal">Pojďme se bavit</p>
+        <h2 class="kontakt-title reveal reveal-delay-1">Jste připraveni udělat další krok?</h2>
+        <p class="kontakt-lead reveal reveal-delay-2">Domluvte si konzultaci — společně projdeme vaše komunikační cíle a navrhneme postup odpovídající českému regulatornímu a mediálnímu prostředí.</p>
+        <p class="kontakt-note reveal reveal-delay-3">Důvěrná konzultace. Bez závazku.</p>
+      </div>
+      <div class="reveal reveal-delay-2">
+        <div class="kontakt-card">
+          <p class="kontakt-card-title">Napište nám</p>
+          <form id="contact-form" onsubmit="handleSubmit(event)">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="name">Jméno a příjmení</label>
+                <input type="text" id="name" name="name" placeholder="Vaše jméno" required>
+              </div>
+              <div class="form-group">
+                <label for="company">Společnost</label>
+                <input type="text" id="company" name="company" placeholder="Název firmy">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="email">E-mail</label>
+                <input type="email" id="email" name="email" placeholder="vas@email.cz" required>
+              </div>
+              <div class="form-group">
+                <label for="phone">Telefon</label>
+                <input type="tel" id="phone" name="phone" placeholder="+420 000 000 000">
+              </div>
+            </div>
+            <div class="form-group full">
+              <label for="topic">Téma</label>
+              <select id="topic" name="topic">
+                <option value="">Vyberte oblast zájmu</option>
+                <option>PR &amp; Mediální komunikace</option>
+                <option>Public Affairs &amp; Legislativa</option>
+                <option>Disease awareness kampaň</option>
+                <option>Launch produktu</option>
+                <option>Krizová komunikace</option>
+                <option>Jiné</option>
+              </select>
+            </div>
+            <div class="form-group full">
+              <label for="message">Zpráva</label>
+              <textarea id="message" name="message" placeholder="Stručně popište vaše komunikační zadání nebo potřebu…"></textarea>
+            </div>
+            <button type="submit" class="form-submit">Odeslat poptávku →</button>
+          </form>
+          <div class="form-contacts">
+            <div class="form-contact-item">
+              <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+              <a href="mailto:info@medrelations.cz">info@medrelations.cz</a>
+            </div>
+            <div class="form-contact-item">
+              <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+              <a href="tel:+420221419220">+420 221 419 220</a>
+            </div>
+          </div>
+        </div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">MedRelations Communications</div>
+  <div class="footer-line">Omnimedia s.r.o. &nbsp;|&nbsp; medrelations.cz</div>
+  <div class="footer-line">Jeseniova 51, 130 00 Praha 3</div>
+  <div class="footer-line">IČ: 264 58 055 &nbsp;|&nbsp; DIČ: CZ26458055</div>
+  <div class="footer-right">&copy; 2026 Všechna práva vyhrazena</div>
+</footer>
+
+<script>
+// Sticky nav
+const nav = document.getElementById('main-nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 40);
+}, { passive: true });
+
+// Mobile menu
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobile-menu');
+hamburger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.remove('open')));
+
+// Scroll reveal
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Active nav
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+const sectionObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const id = e.target.getAttribute('id');
+      navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + id));
+    }
+  });
+}, { threshold: 0.35 });
+sections.forEach(s => sectionObs.observe(s));
+
+// Contact form
+function handleSubmit(e) {
+  e.preventDefault();
+  const btn = e.target.querySelector('.form-submit');
+  btn.textContent = 'Odesílám…';
+  btn.disabled = true;
+  // Zde napojit na backend / Formspree / EmailJS
+  setTimeout(() => {
+    btn.textContent = 'Zpráva odeslána ✓';
+    btn.style.background = '#0D7377';
+    e.target.reset();
+  }, 1200);
+}
+</script>
+
+<!-- ═══════════════════════════════════════════════════
+     COOKIE CONSENT — LOGIC & GA4 LOADER
+     ═══════════════════════════════════════════════════ -->
+<script>
+// ── Konfigurace ──────────────────────────────────────
+const GA4_ID = 'G-JXVN90D605';
+const COOKIE_KEY  = 'mr_cookie_consent';
+const COOKIE_DAYS = 365;
+
+// ── Uložení do localStorage ──────────────────────────
+function saveConsent(analytics) {
+  const data = {
+    necessary: true,
+    analytics: analytics,
+    timestamp: new Date().toISOString(),
+    version: '1.0'
+  };
+  localStorage.setItem(COOKIE_KEY, JSON.stringify(data));
+  return data;
+}
+
+function getConsent() {
+  try { return JSON.parse(localStorage.getItem(COOKIE_KEY)); }
+  catch { return null; }
+}
+
+// ── GA4 podmíněné načtení ────────────────────────────
+function loadGA4() {
+  if (document.getElementById('ga4-script')) return;
+  const s = document.createElement('script');
+  s.id  = 'ga4-script';
+  s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA4_ID;
+  s.async = true;
+  document.head.appendChild(s);
+
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { dataLayer.push(arguments); }
+  window.gtag = gtag;
+
+  gtag('js', new Date());
+  gtag('config', GA4_ID, {
+    anonymize_ip: true,
+    allow_google_signals: false,
+    allow_ad_personalization_signals: false,
+    ads_data_redaction: true
+  });
+
+  gtag('consent', 'update', {
+    analytics_storage:   'granted',
+    ad_storage:          'denied',
+    ad_user_data:        'denied',
+    ad_personalization:  'denied',
+  });
+}
+
+// ── Consent Mode v2 — výchozí stav (PŘED souhlasem) ─
+window.dataLayer = window.dataLayer || [];
+function gtag() { dataLayer.push(arguments); }
+gtag('consent', 'default', {
+  analytics_storage:   'denied',
+  ad_storage:          'denied',
+  ad_user_data:        'denied',
+  ad_personalization:  'denied',
+  wait_for_update:     500
+});
+
+// ── UI akce ─────────────────────────────────────────
+function hideBanner() {
+  document.getElementById('cookie-overlay').classList.add('hidden');
+  document.getElementById('cookie-prefs-btn').classList.remove('hidden');
+}
+
+function cookieAcceptAll() {
+  document.getElementById('cat-analytics').checked = true;
+  saveConsent(true);
+  loadGA4();
+  hideBanner();
+}
+
+function cookieRejectAll() {
+  document.getElementById('cat-analytics').checked = false;
+  saveConsent(false);
+  hideBanner();
+}
+
+function cookieSavePrefs() {
+  const a = document.getElementById('cat-analytics').checked;
+  saveConsent(a);
+  if (a) loadGA4();
+  hideBanner();
+}
+
+function cookieReopenBanner() {
+  const consent = getConsent();
+  if (consent) {
+    document.getElementById('cat-analytics').checked = !!consent.analytics;
+  }
+  document.getElementById('cookie-overlay').classList.remove('hidden');
+  document.getElementById('cookie-prefs-btn').classList.add('hidden');
+}
+
+// ── Inicializace při načtení stránky ────────────────
+(function init() {
+  const consent = getConsent();
+  if (!consent) return; // žádný souhlas → zobraz banner
+  hideBanner();
+  if (consent.analytics) loadGA4();
+})();
+</script>
+</body>
+</html>
