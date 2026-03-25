@@ -73,6 +73,9 @@ nav {
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 100;
+  background: rgba(10,35,66,0.5);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   transition: background var(--transition), box-shadow var(--transition);
 }
 nav.scrolled {
@@ -168,6 +171,35 @@ nav.scrolled {
   position: relative;
   overflow: hidden;
   padding-top: 68px;
+}
+/* Scroll arrow */
+.hero-scroll-arrow {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  opacity: 1;
+  transition: opacity 0.4s ease;
+  z-index: 3;
+}
+.hero-scroll-arrow.hidden { opacity: 0; pointer-events: none; }
+.hero-scroll-arrow svg {
+  width: 22px; height: 22px;
+  fill: none;
+  stroke: var(--mint);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  animation: bounce 2s ease-in-out infinite;
+}
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(6px); }
 }
 .hero-accent-left {
   position: absolute;
@@ -345,7 +377,7 @@ nav.scrolled {
   gap: 72px;
   position: relative;
   z-index: 2;
-  align-items: start;
+  align-items: stretch;
 }
 .who-left .section-lead { color: #a8c8d8; margin-bottom: 32px; }
 .who-differentiators { display: flex; flex-direction: column; gap: 12px; }
@@ -360,13 +392,13 @@ nav.scrolled {
   flex-shrink: 0;
 }
 .who-diff-text { font-size: 14px; color: var(--white); line-height: 1.5; }
-.who-right { border-left: 1px solid rgba(255,255,255,0.09); padding-left: 44px; display: flex; flex-direction: column; }
-.who-parent { font-size: 11px; color: #5a7a8e; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 7px; }
-.who-parent-name { font-family: var(--font-display); font-size: 20px; font-weight: 700; color: var(--white); margin-bottom: 24px; }
-.who-divider { height: 2px; width: 60px; background: var(--mint); margin-bottom: 28px; }
-.who-stats { display: flex; flex-direction: column; gap: 20px; }
-.who-stat-value { font-family: var(--font-display); font-size: 18px; font-weight: 700; color: var(--mint); line-height: 1.2; }
-.who-stat-label { font-size: 12px; color: #7aaabb; margin-top: 2px; }
+.who-right {
+  border-left: 1px solid rgba(255,255,255,0.09);
+  padding-left: 44px;
+  display: flex;
+  flex-direction: column;
+  /* No overflow hidden here — only feed-panel clips */
+}
 
 /* Omnimedia + stats block at bottom of left column */
 .who-omnimedia {
@@ -374,13 +406,27 @@ nav.scrolled {
   padding-top: 24px;
   border-top: 1px solid rgba(255,255,255,0.08);
 }
+.who-parent {
+  font-size: 11px; font-weight: 500;
+  color: #5a7a8e;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.who-divider { height: 2px; width: 48px; background: var(--mint); margin-bottom: 20px; }
 .who-stats { display: flex; flex-direction: column; gap: 14px; }
+.who-stat-value {
+  font-family: var(--font-display);
+  font-size: 17px; font-weight: 700;
+  color: var(--mint); line-height: 1.2;
+}
+.who-stat-label { font-size: 12px; color: #7aaabb; margin-top: 2px; }
 
 /* Feed header in who-right */
 .who-feed-header {
   display: flex; align-items: center; justify-content: space-between;
   margin-bottom: 16px; padding-bottom: 12px;
   border-bottom: 1px solid rgba(255,255,255,0.08);
+  flex-shrink: 0;
 }
 .feed-live-dot-wrap { display: flex; align-items: center; gap: 6px; }
 .feed-live-dot-small {
@@ -388,24 +434,30 @@ nav.scrolled {
   background: var(--mint);
   animation: blink 2.2s ease-in-out infinite;
 }
-@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
 .feed-live-text { font-size: 10px; color: #3a5a6e; letter-spacing: 0.06em; }
 
-/* Feed panel — same logic for desktop and mobile */
-.feed-panel-wrap { position: relative; }
+/* Feed panel wrap — this is the clipping + shadow container */
+.feed-panel-wrap {
+  position: relative;
+  flex: 1;            /* fills remaining height of who-right */
+}
+
 .feed-panel {
   overflow: hidden;
-  max-height: 420px; /* approx 3 items */
-  transition: max-height 0.4s ease;
+  max-height: 560px;  /* 3 items comfortably visible */
+  transition: max-height 0.5s ease;
 }
 .feed-panel.expanded { max-height: 9999px; }
 
+/* Shadow — bottom of feed-panel-wrap, fades into the right-column bg */
 .feed-shadow-panel {
-  position: absolute; bottom: 0; left: 0; right: 0;
-  height: 80px;
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 90px;
   background: linear-gradient(transparent, var(--navy2));
   pointer-events: none;
   transition: opacity 0.3s;
+  border-radius: 0 0 var(--radius) var(--radius);
 }
 .feed-shadow-panel.hidden { opacity: 0; }
 
@@ -419,6 +471,7 @@ nav.scrolled {
   font-weight: 500; color: #5e7a8a;
   cursor: pointer; text-align: center;
   transition: border-color var(--transition), color var(--transition);
+  flex-shrink: 0;
 }
 .feed-toggle:hover { border-color: var(--teal); color: var(--white); }
 
@@ -438,7 +491,7 @@ nav.scrolled {
 .client-card-a { font-size: 13px; color: var(--muted); line-height: 1.68; }
 
 /* ── NÁŠ PŘÍSTUP ──────────────────────────────────── */
-#pristup { padding: var(--section-pad); background: var(--light); }
+#pristup { padding: var(--section-pad); padding-bottom: 40px; background: var(--light); }
 .approach-header-bar { background: var(--teal); border-radius: var(--radius); margin-bottom: 40px; }
 .approach-header-inner { padding: 22px 28px; }
 .approach-header-inner .section-label { color: rgba(255,255,255,0.65); }
@@ -524,31 +577,6 @@ nav.scrolled {
 .compliance-item:hover { border-color: var(--mint); box-shadow: 0 4px 20px rgba(10,35,66,0.09); }
 .compliance-item-title { font-size: 14px; font-weight: 600; color: var(--navy); margin-bottom: 6px; }
 .compliance-item-body { font-size: 13px; color: var(--muted); line-height: 1.68; }
-
-/* ── PROČ MY ──────────────────────────────────────── */
-#proc-my { padding: var(--section-pad); background: var(--white); }
-.why-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
-.why-card {
-  background: var(--light);
-  border: 1px solid var(--card-border);
-  border-radius: var(--radius);
-  padding: 18px 20px;
-  display: flex;
-  gap: 16px;
-  align-items: flex-start;
-  transition: border-color var(--transition), box-shadow var(--transition);
-}
-.why-card:hover { border-color: var(--teal); box-shadow: 0 4px 18px rgba(10,35,66,0.06); }
-.why-icon {
-  width: 36px; height: 36px;
-  background: var(--teal);
-  border-radius: var(--radius);
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0; margin-top: 1px;
-}
-.why-icon svg { width: 17px; height: 17px; fill: var(--white); }
-.why-card-title { font-size: 14px; font-weight: 600; color: var(--navy); margin-bottom: 6px; line-height: 1.38; }
-.why-card-body { font-size: 13px; color: var(--muted); line-height: 1.68; }
 
 /* ── REFERENCE ────────────────────────────────────── */
 #reference { padding: var(--section-pad); background: var(--navy); position: relative; overflow: hidden; }
@@ -681,6 +709,116 @@ footer {
 .footer-line { font-size: 12px; color: #3a5a6e; line-height: 1.5; }
 .footer-right { font-size: 12px; color: #2a4a5e; margin-top: 4px; }
 
+/* ── STATEMENT BANNER ─────────────────────────────── */
+.statement-banner {
+  background: var(--light);
+  border-top: 2px solid var(--mint);
+  padding: 28px 0 40px;
+  position: relative;
+  overflow: hidden;
+}
+.statement-banner::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 4px;
+  background: var(--mint);
+}
+.statement-text {
+  font-family: var(--font-display);
+  font-size: clamp(17px, 2vw, 24px);
+  font-weight: 600;
+  color: var(--navy);
+  line-height: 1.38;
+  letter-spacing: -0.01em;
+  padding-left: 32px;
+  max-width: 820px;
+}
+
+/* ── PA ANCHOR LINK ───────────────────────────────── */
+.area-pa-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--mint);
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  transition: gap var(--transition), color var(--transition);
+}
+.area-pa-link:hover { gap: 8px; color: #18d4c0; }
+.area-pa-link svg { width: 12px; height: 12px; fill: currentColor; flex-shrink: 0; }
+
+/* ── REFERENCE STATEMENT ──────────────────────────── */
+.reference-statement {
+  background: var(--navy2);
+  border-left: 3px solid var(--mint);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  padding: 18px 22px;
+  margin-bottom: 28px;
+}
+.reference-statement p {
+  font-size: 14px;
+  color: #a8c8d8;
+  line-height: 1.7;
+}
+
+/* ── FORM CONFIRMATION ────────────────────────────── */
+.form-confirm {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 20px;
+  gap: 16px;
+}
+.form-confirm.visible { display: flex; }
+.form-confirm-icon {
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  background: rgba(20,189,172,0.15);
+  border: 2px solid var(--mint);
+  display: flex; align-items: center; justify-content: center;
+}
+.form-confirm-icon svg { width: 24px; height: 24px; stroke: var(--mint); fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+.form-confirm-title { font-family: var(--font-display); font-size: 18px; font-weight: 700; color: var(--white); }
+.form-confirm-body { font-size: 13px; color: #7aaabb; line-height: 1.65; max-width: 280px; }
+
+/* ── MOBILE ACCORDION (pilíře) ────────────────────── */
+.pillar-toggle {
+  display: none; /* shown only on mobile via media query */
+  width: 100%;
+  background: none; border: none;
+  padding: 20px 22px;
+  cursor: pointer;
+  text-align: left;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.pillar-toggle-label {
+  font-family: var(--font-display);
+  font-size: 16px; font-weight: 700;
+  color: var(--white);
+  line-height: 1.3;
+}
+.pillar-toggle-icon {
+  width: 20px; height: 20px;
+  fill: none; stroke: var(--mint);
+  stroke-width: 2; stroke-linecap: round;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+.pillar.open .pillar-toggle-icon { transform: rotate(180deg); }
+.pillar-collapsible {
+  overflow: hidden;
+  max-height: 9999px;
+  transition: max-height 0.35s ease, padding 0.35s ease;
+}
+
 /* ── RESPONSIVE ───────────────────────────────────── */
 @media (max-width: 980px) {
   :root { --section-pad: 56px 0; }
@@ -697,7 +835,6 @@ footer {
   .rozsah-grid         { grid-template-columns: 1fr; gap: 36px; }
   .rozsah-grid::after  { display: none; }
   .compliance-grid     { grid-template-columns: 1fr; }
-  .why-grid            { grid-template-columns: 1fr; }
   .reference-grid      { grid-template-columns: 1fr; gap: 40px; }
   .reference-bg        { display: none; }
   .kontakt-grid        { grid-template-columns: 1fr; gap: 36px; }
@@ -706,6 +843,17 @@ footer {
   .nav-links           { display: none; }
   .nav-hamburger       { display: flex; }
   .form-row            { grid-template-columns: 1fr; }
+  /* Accordion ON for pillars */
+  .pillar-toggle       { display: flex; }
+  .pillar-num          { display: none; }
+  .pillar-title        { display: none; }
+  .pillar-collapsible  { max-height: 0; }
+  .pillar.open .pillar-collapsible { max-height: 9999px; }
+  .pillar-header       { display: none; } /* header replaced by toggle button */
+}
+/* Tablet: feed shows 2 items */
+@media (max-width: 860px) and (min-width: 641px) {
+  .feed-panel { max-height: 380px; } /* ~2 items */
 }
 @media (max-width: 640px) {
   .container           { padding: 0 20px; }
@@ -713,6 +861,8 @@ footer {
   .areas-grid          { grid-template-columns: 1fr; }
   footer               { padding: 24px 20px; }
   .footer-right        { text-align: center; }
+  /* Form 1 column on narrow mobile */
+  .form-row            { grid-template-columns: 1fr; }
 }
 </style>
 
@@ -972,12 +1122,10 @@ footer {
         <span class="nav-logo-secondary">Communications</span>
       </a>
       <ul class="nav-links">
-        <li><a href="#vyzva">Výzva</a></li>
         <li><a href="#kdo-jsme">Kdo jsme</a></li>
+        <li><a href="#pristup">Náš přístup</a></li>
         <li><a href="#expertiza">Expertíza</a></li>
         <li><a href="#compliance">Compliance</a></li>
-        <li><a href="#proc-my">Proč my</a></li>
-        <li><a href="#reference">Reference</a></li>
         <li><a href="#kontakt" class="nav-cta">Konzultace</a></li>
       </ul>
       <button class="nav-hamburger" id="hamburger" aria-label="Menu">
@@ -986,12 +1134,10 @@ footer {
     </div>
   </div>
   <div class="nav-mobile" id="mobile-menu">
-    <a href="#vyzva">Výzva</a>
     <a href="#kdo-jsme">Kdo jsme</a>
+    <a href="#pristup">Náš přístup</a>
     <a href="#expertiza">Expertíza</a>
     <a href="#compliance">Compliance</a>
-    <a href="#proc-my">Proč my</a>
-    <a href="#reference">Reference</a>
     <a href="#kontakt">Konzultace →</a>
   </div>
 </nav>
@@ -1010,11 +1156,10 @@ footer {
       <div class="hero-tagline reveal reveal-delay-3">
         Pomáháme farmaceutickým společnostem a odborníkům ve zdravotnictví komunikovat bezpečně, srozumitelně a v plném souladu s regulací.
       </div>
-      <div class="hero-actions reveal reveal-delay-4">
-        <a href="#kontakt" class="btn-primary">Domluvit konzultaci</a>
-        <a href="#kdo-jsme" class="btn-secondary">Více o agentuře</a>
-      </div>
     </div>
+  </div>
+  <div class="hero-scroll-arrow" id="heroArrow" onclick="document.getElementById('vyzva').scrollIntoView({behavior:'smooth'})">
+    <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
   </div>
 </section>
 
@@ -1081,17 +1226,14 @@ footer {
       <div class="who-right reveal reveal-delay-2">
         <div class="who-feed-header">
           <span class="section-label" style="margin-bottom:0">Aktuálně řešíme</span>
-          <div class="feed-live-dot-wrap">
-            <span class="feed-live-dot-small"></span>
-            <span class="feed-live-text">březen 2026</span>
+          <span class="feed-live-dot-small"></span>
+        </div>
+        <div class="feed-panel-wrap">
+          <div class="feed-panel" id="feedPanel">
+            <div class="feed-loading">Načítám...</div>
           </div>
+          <div class="feed-shadow-panel" id="feedShadow"></div>
         </div>
-
-        <!-- Desktop feed (collapsed to 3, expand on click) -->
-        <div class="feed-panel" id="feedPanel">
-          <div class="feed-loading">Načítám...</div>
-        </div>
-        <div class="feed-shadow-panel" id="feedShadow"></div>
         <button class="feed-toggle" id="feedToggle">Zobrazit vše</button>
       </div>
 
@@ -1147,31 +1289,56 @@ footer {
     <div class="pillars">
       <div class="pillar reveal reveal-delay-1">
         <div class="pillar-header"><div class="pillar-num">01</div><div class="pillar-title">Medicínská odbornost</div></div>
-        <div class="pillar-body">
-          <div class="pillar-point">Hluboké porozumění chorobám, terapeutickým oblastem a klinickým datům</div>
-          <div class="pillar-point">Vědecky přesná sdělení, která budují kredibilitu</div>
-          <div class="pillar-point">Důvěryhodná pro odborníky i regulatorní instituce</div>
+        <button class="pillar-toggle" onclick="togglePillar(this)" aria-expanded="false">
+          <span class="pillar-toggle-label">01 — Medicínská odbornost</span>
+          <svg class="pillar-toggle-icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="pillar-collapsible">
+          <div class="pillar-body">
+            <div class="pillar-point">Hluboké porozumění chorobám, terapeutickým oblastem a klinickým datům</div>
+            <div class="pillar-point">Vědecky přesná sdělení, která budují kredibilitu</div>
+            <div class="pillar-point">Důvěryhodná pro odborníky i regulatorní instituce</div>
+          </div>
         </div>
       </div>
       <div class="pillar reveal reveal-delay-2">
         <div class="pillar-header"><div class="pillar-num">02</div><div class="pillar-title">Regulatorní soulad</div></div>
-        <div class="pillar-body">
-          <div class="pillar-point">Právní a etické rámce integrovány už od projektového briefu</div>
-          <div class="pillar-point">Soulad s farmaceutickými etickými kodexy, tiskovým právem a GDPR</div>
-          <div class="pillar-point">Každý výstup respektuje schvalovací procesy klienta</div>
+        <button class="pillar-toggle" onclick="togglePillar(this)" aria-expanded="false">
+          <span class="pillar-toggle-label">02 — Regulatorní soulad</span>
+          <svg class="pillar-toggle-icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="pillar-collapsible">
+          <div class="pillar-body">
+            <div class="pillar-point">Právní a etické rámce integrovány už od projektového briefu</div>
+            <div class="pillar-point">Soulad s farmaceutickými etickými kodexy, tiskovým právem a GDPR</div>
+            <div class="pillar-point">Každý výstup respektuje schvalovací procesy klienta</div>
+          </div>
         </div>
       </div>
       <div class="pillar reveal reveal-delay-3">
         <div class="pillar-header"><div class="pillar-num">03</div><div class="pillar-title">Strategická koordinace</div></div>
-        <div class="pillar-body">
-          <div class="pillar-point">Mediální, odborná a institucionální komunikace propojené do jednoho celku</div>
-          <div class="pillar-point">Modulární struktura — vstup do projektu v jakékoli fázi</div>
-          <div class="pillar-point">PR a PA jako jedna integrovaná funkce</div>
+        <button class="pillar-toggle" onclick="togglePillar(this)" aria-expanded="false">
+          <span class="pillar-toggle-label">03 — Strategická koordinace</span>
+          <svg class="pillar-toggle-icon" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="pillar-collapsible">
+          <div class="pillar-body">
+            <div class="pillar-point">Mediální, odborná a institucionální komunikace propojené do jednoho celku</div>
+            <div class="pillar-point">Modulární struktura — vstup do projektu v jakékoli fázi</div>
+            <div class="pillar-point">PR a PA jako jedna integrovaná funkce</div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
+
+<!-- STATEMENT BANNER -->
+<div class="statement-banner">
+  <div class="container">
+    <p class="statement-text reveal">Přinášíme hlubokou znalost českého zdravotnického prostředí — a zároveň nezávislý pohled zvenčí.</p>
+  </div>
+</div>
 
 <!-- EXPERTÍZA -->
 <section id="expertiza">
@@ -1200,6 +1367,10 @@ footer {
         <div class="area-num">04</div>
         <div class="area-title">Public Affairs a stakeholder relations</div>
         <ul class="area-points"><li>Mapování a zapojení stakeholderů</li><li>Dialog s odbornými společnostmi</li><li>Integrované PR + PA na komplexních projektech</li></ul>
+        <a href="#pa-deepdive" class="area-pa-link" onclick="event.preventDefault();document.getElementById('pa-deepdive').scrollIntoView({behavior:'smooth'})">
+          Více o PA
+          <svg viewBox="0 0 24 24"><path d="M12 4v16m0 0l-6-6m6 6l6-6"/></svg>
+        </a>
       </div>
       <div class="area-card reveal reveal-delay-2">
         <div class="area-num">05</div>
@@ -1213,7 +1384,7 @@ footer {
       </div>
     </div>
 
-    <div class="pa-section">
+    <div class="pa-section" id="pa-deepdive">
       <div class="pa-intro">
         <div>
           <p class="pa-label reveal">Public Affairs &amp; Legislativní prostředí</p>
@@ -1301,48 +1472,10 @@ footer {
             <div class="compliance-item-body">AIFP, EUCOMED a další relevantní sektorové kodexy upravující zdravotnickou komunikaci.</div>
           </div>
           <div class="compliance-item reveal reveal-delay-3">
-            <div class="compliance-item-title">Schvalovacích procesů klienta</div>
-            <div class="compliance-item-body">Všechny výstupy jsou navrhovány tak, aby hladce prošly MLR, medicinským a právním review.</div>
+            <div class="compliance-item-title">Schvalovacích procesů a globální strategie klienta</div>
+            <div class="compliance-item-body">Všechny výstupy jsou navrhovány tak, aby hladce prošly MLR, medicinským a právním review — v plném souladu s globálním zadáním a korporátní governance klienta.</div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- PROČ MY -->
-<section id="proc-my">
-  <div class="container">
-    <div class="approach-header-bar reveal">
-      <div class="approach-header-inner">
-        <p class="section-label">Proč MedRelations</p>
-        <h2 class="section-title">Nezávislý partner, který zná systém zevnitř.</h2>
-      </div>
-    </div>
-    <div class="why-grid">
-      <div class="why-card reveal reveal-delay-1">
-        <div class="why-icon"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg></div>
-        <div><div class="why-card-title">Hluboká znalost českého trhu</div><div class="why-card-body">Detailní přehled o českých zdravotnických médiích, institucích a regulatorním prostředí.</div></div>
-      </div>
-      <div class="why-card reveal reveal-delay-2">
-        <div class="why-icon"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
-        <div><div class="why-card-title">Zkušenosti z farmacie a zdravotnictví</div><div class="why-card-body">Ověřené výsledky u farmaceutických firem, výrobců zdravotnických prostředků a odborných institucí.</div></div>
-      </div>
-      <div class="why-card reveal reveal-delay-1">
-        <div class="why-icon"><svg viewBox="0 0 24 24"><path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"/></svg></div>
-        <div><div class="why-card-title">Integrované PR + PA</div><div class="why-card-body">Media relations a public affairs koordinované jako jedna koherentní komunikační funkce.</div></div>
-      </div>
-      <div class="why-card reveal reveal-delay-2">
-        <div class="why-icon"><svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg></div>
-        <div><div class="why-card-title">Objektivní externí pohled</div><div class="why-card-body">Jako externí agentura přinášíme nestranný strategický nadhled — bez zatížení interní politikou a předchozími rozhodnutími.</div></div>
-      </div>
-      <div class="why-card reveal reveal-delay-1">
-        <div class="why-icon"><svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1s3.1 1.39 3.1 3.1v2z"/></svg></div>
-        <div><div class="why-card-title">Diskrétní a systematický způsob spolupráce</div><div class="why-card-body">Důvěrnost jako standard. Systematická realizace. Precizní dodávky. Žádná zbytečná improvizace.</div></div>
-      </div>
-      <div class="why-card reveal reveal-delay-2">
-        <div class="why-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg></div>
-        <div><div class="why-card-title">Soulad s governance a globální strategií</div><div class="why-card-body">Plně respektujeme korporátní governance, globální strategii a detailní zadání klienta — implementujeme přesně.</div></div>
       </div>
     </div>
   </div>
@@ -1356,11 +1489,14 @@ footer {
       <div class="reference-left">
         <p class="section-label reveal">Reference</p>
         <h2 class="section-title reveal reveal-delay-1">Naše práce mluví za sebe — diskrétně, ne nahlas.</h2>
-        <p class="reference-subtitle reveal reveal-delay-2">Důvěrnost je přirozená součást profesionální spolupráce ve zdravotnictví.</p>
+        <div class="reference-statement reveal reveal-delay-2">
+          <p>Za poslední tři roky jsme komunikačně doprovázeli desítky projektů — od disease awareness kampaní přes antibiotickou rezistenci až po screeningové programy a komunikaci zdravotních pojišťoven.</p>
+        </div>
+        <p class="reference-subtitle reveal reveal-delay-3">Důvěrnost je přirozená součást profesionální spolupráce ve zdravotnictví.</p>
         <ul class="reference-points">
-          <li class="reveal reveal-delay-2">Konkrétní projektové zkušenosti sdílíme individuálně a důvěrně</li>
-          <li class="reveal reveal-delay-3">Case studies prezentujeme po podpisu NDA nebo při formálním výběru agentury</li>
-          <li class="reveal reveal-delay-4">Reference klientů dostupné na vyžádání — se souhlasem klienta</li>
+          <li class="reveal reveal-delay-3">Konkrétní projektové zkušenosti sdílíme individuálně a důvěrně</li>
+          <li class="reveal reveal-delay-4">Case studies prezentujeme po podpisu NDA nebo při formálním výběru agentury</li>
+          <li class="reveal reveal-delay-5">Reference klientů dostupné na vyžádání — se souhlasem klienta</li>
         </ul>
       </div>
       <div class="reveal reveal-delay-3">
@@ -1371,7 +1507,6 @@ footer {
           <li>Odborné a terapeutické asociace</li>
           <li>Zdravotnické instituce</li>
           <li>Pacientské organizace</li>
-          <li>Lékařské osobnosti</li>
         </ul>
       </div>
     </div>
@@ -1427,10 +1562,17 @@ footer {
             </div>
             <div class="form-group full">
               <label for="message">Zpráva</label>
-              <textarea id="message" name="message" placeholder="Stručně popište vaše komunikační zadání nebo potřebu…"></textarea>
+              <textarea id="message" name="message" placeholder="Stačí pár slov — např. o jaký typ projektu jde nebo co vás zajímá."></textarea>
             </div>
             <button type="submit" class="form-submit">Odeslat poptávku →</button>
           </form>
+          <div class="form-confirm" id="formConfirm">
+            <div class="form-confirm-icon">
+              <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div class="form-confirm-title">Děkujeme za zprávu</div>
+            <div class="form-confirm-body">Ozveme se vám do 24 hodin. Těšíme se na spolupráci.</div>
+          </div>
           <div class="form-contacts">
             <div class="form-contact-item">
               <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
@@ -1442,6 +1584,10 @@ footer {
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- FOOTER -->
 <footer>
@@ -1484,17 +1630,42 @@ const sectionObs = new IntersectionObserver(entries => {
 }, { threshold: 0.35 });
 sections.forEach(s => sectionObs.observe(s));
 
-// Contact form
+// Hero scroll arrow — hide after first scroll
+const heroArrow = document.getElementById('heroArrow');
+if (heroArrow) {
+  window.addEventListener('scroll', function hideArrow() {
+    if (window.scrollY > 80) {
+      heroArrow.classList.add('hidden');
+      window.removeEventListener('scroll', hideArrow);
+    }
+  }, { passive: true });
+}
+
+// Mobile accordion for pillars
+function togglePillar(btn) {
+  const pillar = btn.closest('.pillar');
+  const isOpen = pillar.classList.contains('open');
+  // Close all
+  document.querySelectorAll('.pillar.open').forEach(p => p.classList.remove('open'));
+  // Open clicked if it was closed
+  if (!isOpen) pillar.classList.add('open');
+  btn.setAttribute('aria-expanded', !isOpen);
+}
+
+// Contact form — show confirmation panel
 function handleSubmit(e) {
   e.preventDefault();
-  const btn = e.target.querySelector('.form-submit');
+  const form    = e.target;
+  const btn     = form.querySelector('.form-submit');
+  const confirm = document.getElementById('formConfirm');
   btn.textContent = 'Odesílám…';
   btn.disabled = true;
+  // Zde napojit na backend / Formspree / EmailJS
   setTimeout(() => {
-    btn.textContent = 'Zpráva odeslána ✓';
-    btn.style.background = '#0D7377';
-    e.target.reset();
-  }, 1200);
+    form.style.display = 'none';
+    confirm.classList.add('visible');
+    form.reset();
+  }, 1000);
 }
 
 // ── AKTUÁLNĚ — JSON FEED ─────────────────────────────
