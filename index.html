@@ -374,7 +374,7 @@ nav.scrolled {
   font-weight: 600;
   letter-spacing: 0.28em;
   text-transform: uppercase;
-  color: var(--mint);
+  color: var(--teal);   /* #0d7377 — passes 4.5:1 on light AND dark bg */
   margin-bottom: 12px;
 }
 .section-title {
@@ -562,6 +562,10 @@ nav.scrolled {
 .approach-header-bar { background: var(--teal); border-radius: var(--radius); margin-bottom: 40px; }
 .approach-header-inner { padding: 22px 28px; }
 .approach-header-inner .section-label { color: rgba(255,255,255,0.65); }
+#kdo-jsme .section-label,
+#expertiza .section-label,
+#reference .section-label,
+#kontakt .section-label { color: var(--mint); }
 .approach-header-inner .section-title { color: var(--white); margin-bottom: 0; }
 .pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
 .pillar {
@@ -1112,7 +1116,7 @@ footer {
           <div class="cookie-cat-header">
             <span class="cookie-cat-name">Nezbytné</span>
             <label class="toggle">
-              <input type="checkbox" id="cat-necessary" checked disabled>
+              <input type="checkbox" id="cat-necessary" aria-label="Nezbytné cookies" checked disabled>
               <span class="toggle-slider"></span>
             </label>
           </div>
@@ -1122,7 +1126,7 @@ footer {
           <div class="cookie-cat-header">
             <span class="cookie-cat-name">Analytické</span>
             <label class="toggle">
-              <input type="checkbox" id="cat-analytics">
+              <input type="checkbox" id="cat-analytics" aria-label="Analytické cookies">
               <span class="toggle-slider"></span>
             </label>
           </div>
@@ -1366,22 +1370,22 @@ footer {
     </div>
     <div class="areas-grid">
       <div class="area-card reveal reveal-delay-1">
-        <div class="area-num">01</div>
+        <div class="area-num" aria-hidden="true">01</div>
         <div class="area-title">Komunikace nemoci a veřejného zdraví</div>
         <ul class="area-points"><li>Disease awareness a edukace pacientů</li><li>Zodpovědná komunikace klinických dat</li><li>Media relations, advertorialy &amp; social media</li></ul>
       </div>
       <div class="area-card reveal reveal-delay-2">
-        <div class="area-num">02</div>
+        <div class="area-num" aria-hidden="true">02</div>
         <div class="area-title">Medicínské a vědecké profilování</div>
         <ul class="area-points"><li>Profilace odborníků a pracovišť</li><li>Komunikace výzkumu a klinických studií</li><li>Zavedené modely spolupráce s KOL</li></ul>
       </div>
       <div class="area-card reveal reveal-delay-3">
-        <div class="area-num">03</div>
+        <div class="area-num" aria-hidden="true">03</div>
         <div class="area-title">Adaptace globálních strategií na CZ trh</div>
         <ul class="area-points"><li>Lokální mediální a kulturní dynamika</li><li>Soulad s českou regulatorní praxí</li><li>Převod globálních sdělení do místního kontextu</li></ul>
       </div>
       <div class="area-card reveal reveal-delay-1">
-        <div class="area-num">04</div>
+        <div class="area-num" aria-hidden="true">04</div>
         <div class="area-title">Public Affairs a stakeholder relations</div>
         <ul class="area-points"><li>Mapování a zapojení stakeholderů</li><li>Dialog s odbornými společnostmi</li><li>Integrované PR + PA na komplexních projektech</li></ul>
         <a href="#pa-deepdive" class="area-pa-link" onclick="event.preventDefault();document.getElementById('pa-deepdive').scrollIntoView({behavior:'smooth'})">
@@ -1390,12 +1394,12 @@ footer {
         </a>
       </div>
       <div class="area-card reveal reveal-delay-2">
-        <div class="area-num">05</div>
+        <div class="area-num" aria-hidden="true">05</div>
         <div class="area-title">Produktová komunikace (OTC, Rx, zdrav. prostředky)</div>
         <ul class="area-points"><li>Komunikační podpora launchů</li><li>Lifecycle komunikace</li><li>Komunikace kolem úhrad a reg. milníků</li></ul>
       </div>
       <div class="area-card reveal reveal-delay-3">
-        <div class="area-num">06</div>
+        <div class="area-num" aria-hidden="true">06</div>
         <div class="area-title">Korporátní a reputační komunikace</div>
         <ul class="area-points"><li>Korporátní komunikace ve zdravotnictví</li><li>Řízení citlivých komunikačních situací</li><li>Podpora interní komunikace</li></ul>
       </div>
