@@ -1662,16 +1662,10 @@ fetch('aktuality.json')
   .then(r => { if (!r.ok) throw new Error(); return r.json(); })
   .then(data => renderFeed(data))
   .catch(() => renderFeed(FEED_FALLBACK));
-</script>
 
-<!-- ═══════════════════════════════════════════════════
-     COOKIE CONSENT — LOGIC & GA4 LOADER
-     ═══════════════════════════════════════════════════ -->
-<script>
-// ── Konfigurace ──────────────────────────────────────
+// ── COOKIE CONSENT & GA4 ─────────────────────────────
 const GA4_ID = 'G-JXVN90D605';
-const COOKIE_KEY  = 'mr_cookie_consent';
-const COOKIE_DAYS = 365;
+const COOKIE_KEY = 'mr_cookie_consent';
 
 // ── Uložení do localStorage ──────────────────────────
 function saveConsent(analytics) {
@@ -1719,9 +1713,9 @@ function loadGA4() {
   });
 }
 
-// ── Consent Mode v2 — výchozí stav (PŘED souhlasem) ─
+// ── Consent Mode v2 — výchozí stav ──────────────────
 window.dataLayer = window.dataLayer || [];
-function gtag() { dataLayer.push(arguments); }
+if (!window.gtag) { window.gtag = function() { dataLayer.push(arguments); }; }
 gtag('consent', 'default', {
   analytics_storage:   'denied',
   ad_storage:          'denied',
